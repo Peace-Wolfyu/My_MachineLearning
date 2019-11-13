@@ -149,7 +149,7 @@ print('         30          ')
 # 有问题
 
 z_7 = np.random.randint(0,10,10)
-Z_8 = np.random.randint(0,10,10)
+z_8 = np.random.randint(0,10,10)
 print(z_7)
 print(z_8)
 print(np.intersect1d(z_7,z_8))
