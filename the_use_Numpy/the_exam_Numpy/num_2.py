@@ -8,10 +8,39 @@ import numpy as np
 #### 11. Create a 3x3 identity matrix (★☆☆)
 
 创建一个 3 * 3 的单位矩阵
+
+identity matrix   ---> 单位矩阵
 """
 
 
 # eye() 知识点
+
+"""
+        def eye(N, M=None, k=0, dtype=float, order='C'):
+            返回一个二维数组，对角线上有值为 1 ，其他地方为零。
+        参数：
+            N : int
+            输出中的行数。
+            
+            M : int, optional
+            输出中的列数。如果为None，则默认为`N`。
+            
+            k : int, optional
+            对角线的索引：0（默认值）表示主对角线，正值表示上对角线，负值表示下对角线。
+            
+            dtype : data-type, optional
+            order : {'C', 'F'}, optional
+
+            Examples
+    --------
+    >>> np.eye(2, dtype=int)
+    array([[1, 0],
+           [0, 1]])
+    >>> np.eye(3, k=1)
+    array([[0.,  1.,  0.],
+           [0.,  0.,  1.],
+           [0.,  0.,  0.]])
+"""
 z = np.eye(3)
 print(z)
 
@@ -65,7 +94,42 @@ print("************************")
 创建一个二维数组  1 在 边界  0 在里面
 """
 
+"""
+        def ones(shape, dtype=None, order='C'):
+        返回给定形状和类型的新数组，并填充为1。
+        
+        参数：
+          shape：  int or sequence of ints
+          dtype : data-type, optional   Default is `numpy.float64`.
+          order : {'C', 'F'}, optional, default: C
+        
+        See Also
+    --------
+    ones_like : Return an array of ones with shape and type of input.
+    empty : Return a new uninitialized array.
+    zeros : Return a new array setting values to zero.
+    full : Return a new array of given shape filled with value.
+    
+     Examples
+    --------
+    >>> np.ones(5)
+    array([1., 1., 1., 1., 1.])
 
+    >>> np.ones((5,), dtype=int)
+    array([1, 1, 1, 1, 1])
+
+    >>> np.ones((2, 1))
+    array([[1.],
+           [1.]])
+
+    >>> s = (2,2)
+    >>> np.ones(s)
+    array([[1.,  1.],
+           [1.,  1.]])
+           
+           
+
+"""
 z_4 = np.ones((10,10))
 print(z_4)
 
@@ -85,6 +149,25 @@ z_5 = np.ones((3,3))
 print(z_5)
 
 # pad() 知识点
+
+"""
+ndarray = numpy.pad(array, pad_width, mode, **kwargs)
+
+    array为要填补的数组
+
+        pad_width是在各维度的各个方向上想要填补的长度,如（（1，2），（2，2）），
+        表示在第一个维度上水平方向上padding=1,垂直方向上padding=2,
+        在第二个维度上水平方向上padding=2,垂直方向上padding=2。如果直接输入一个整数，
+        则说明各个维度和各个方向所填补的长度都一样。
+        mode为填补类型，即怎样去填补，有“constant”，“edge”等模式，如果为constant模式，
+        就得指定填补的值，如果不指定，则默认填充0。 
+
+剩下的都是一些可选参数，具体可查看 
+https://docs.scipy.org/doc/numpy/reference/generated/numpy.pad.html
+
+ndarray为填充好的返回值。
+
+"""
 z_5 = np.pad(z_5, pad_width=1, mode='constant', constant_values=0)
 print(z_5)
 print("************************")
@@ -123,6 +206,42 @@ print("************************")
 """
 
 # diag() 知识点
+
+"""
+        def diag(v, k=0):提取对角线或构造对角线数组。
+        
+        参数：
+            v : array_like
+            如果v是二维数组，则返回其第k个对角线的副本。
+            如果v是一维数组，则返回第k个带有v的二维数组。
+            
+            k : int, optional
+            对角线问题。
+            默认值为0。对于主对角线上方的对角线，请使用“ k> 0”，对于主对角线下方的对角线，请使用“ k <0”。
+            
+             Examples
+    --------
+    >>> x = np.arange(9).reshape((3,3))
+    >>> x
+    array([[0, 1, 2],
+           [3, 4, 5],
+           [6, 7, 8]])
+
+    >>> np.diag(x)
+    array([0, 4, 8])
+    >>> np.diag(x, k=1)
+    array([1, 5])
+    >>> np.diag(x, k=-1)
+    array([3, 7])
+
+    >>> np.diag(np.diag(x))
+    array([[0, 0, 0],
+           [0, 4, 0],
+           [0, 0, 8]])
+           
+           
+
+"""
 z_6 = np.diag(1+np.arange(4),k=-1)
 print(z_6)
 print("************************")
@@ -151,6 +270,29 @@ print("************************")
 
 
 # unravel() 知识点
+
+"""
+            unravel_index(indices, shape, order='C')
+                将平面索引或平面索引数组转换为坐标数组的元组。
+            参数：
+                indices : array_like
+                    一个整数数组，其元素是尺寸为``shape''的数组的展平版本的索引。在1.6.0版之前，此函数仅接受一个索引值。
+                shape : tuple of ints
+                用于解散``索引''的数组的形状。
+                order : {'C', 'F'}, optional
+
+ Examples
+    --------
+    >>> np.unravel_index([22, 41, 37], (7,6))
+    (array([3, 6, 6]), array([4, 5, 1]))
+    >>> np.unravel_index([31, 41, 13], (7,6), order='F')
+    (array([3, 6, 6]), array([4, 5, 1]))
+
+    >>> np.unravel_index(1621, (6,7,8,9))
+    (3, 1, 4, 1)
+
+            
+"""
 print(np.unravel_index(99,(6,7,8)))
 
 
