@@ -13,7 +13,11 @@
 
 """
 from sklearn.datasets import load_iris
-
+from sklearn.model_selection import train_test_split
+import pandas as pd
+import mglearn
+from sklearn.neighbors import KNeighborsClassifier
+import numpy as np
 'load_iris 返回的iris对象是一个Bunch对象 与字典相似 包含键和值'
 ' Bunch 对象'
 iris_dataset = load_iris()
@@ -132,27 +136,91 @@ print(" Target :\n{}".format(iris_dataset['target']))
 ' 0 ： setosa'
 ' 1 : versicolor'
 ' 2 : virginica'
+print("")
+print("")
+
+" 训练数据与测试数据"
+
+'scikit-learn 用train_test_split 可以打乱数据集并进行拆分 将' \
+'75%的行数据及其对应标签作为训练集  剩下25%数据及其标签作为测试集'
+
+' scikit-learn 中数据通常用大写X表示  标签用小写y表示'
+
+
+X_train,X_test,y_train,y_test = train_test_split(
+    iris_dataset['data'],
+    iris_dataset['target'],
+    random_state=0
+)
+' random_state 参数指定了随机数生成器的种子  这样函数的输出就是固定不变的  所以代码的输出始终一样'
+
+print(" X_train shape : {}".format(X_train.shape))
+print(" y_train shape : {}".format(y_train.shape))
+# >>>
+# X_train shape : (112, 4)
+#  y_train shape : (112,)
+
+print("")
+print("")
 
 
 
+print(" X_test shape : {}".format(X_test.shape))
+print(" y_test shape : {}".format(y_test.shape))
+# >>>
+# X_test shape : (38, 4)
+#  y_test shape : (38,)
+
+print("")
+print("")
+
+" 观察数据 "
+
+' 绘制散点图 '
+
+iris_dataframe = pd.DataFrame(X_train,columns=iris_dataset.feature_names)
+
+pd.plotting.scatter_matrix(iris_dataframe,c=y_train,figsize=(15,15),marker='o',hist_kwds={'bins':20},s=60,alpha=
+                        .8,cmap=mglearn.cm3)
+
+
+# pyplot.show()
+
+
+" 构建第一个模型 "
+
+'k 近邻算法'
+
+knn = KNeighborsClassifier(n_neighbors=1)
+
+knn.fit(X_train,y_train)
+
+print(knn.fit(X_train,y_train))
+
+# >>>
+# KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+#                      metric_params=None, n_jobs=None, n_neighbors=1, p=2,
+#                      weights='uniform')
 
 
 
+print("")
+print("")
 
 
+" 做出预测 "
+
+X_new = np.array([
+    [5,2.9,1,0.2]
+])
+
+print("X_new shape : ()",format(X_new.shape))
+# >>>
+# X_new shape : () (1, 4)
 
 
-
-
-
-
-
-
-
-
-
-
-
+print("")
+print("")
 
 
 
