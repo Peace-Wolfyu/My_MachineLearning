@@ -223,16 +223,54 @@ print("")
 print("")
 
 
+' 调用knn对象的predict方法进行预测'
+
+prediction = knn.predict(X_new)
+
+print(" Prediction : {}".format(prediction))
+
+print( " Predicticted target name : {}".format(iris_dataset['target_names'][prediction]))
+
+' 根据预测，这朵花属于类别 0 即是 setosa品种'
+
+# <<<
+# Prediction: [0]
+# Predicticted target name: ['setosa']
+
+print("")
+print("")
+
+" 评估模型"
+
+' 使用测试集 对测试集数据进行预测 并将预测结果与标签进行对比' \
+' 通过计算精度来衡量模型的优劣'
+
+y_pred = knn.predict(X_test)
+
+print(" Test set predictions : \n {}".format(y_pred))
+
+# >>>
+# Test
+# set
+# predictions:
+# [2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0 2 1 0 2 2 1 0
+#  2]
+
+print("")
+print("")
+
+print("Test set score: {:.2f}".format(knn.score(X_test, y_test)))
+
+# >>>
+# Test set score: 0.97
 
 
 
+' 还可以使用knn对象的score方法来计算测试集的精度'
 
-
-
-
-
-
-
-
+print("Test set score : {:.2f}".format(knn.score(X_test,y_test)))
+'对于这个模型来说 测试集的精度约为 0.97'
+# >>>
+# Test set score : 0.97
 
 
