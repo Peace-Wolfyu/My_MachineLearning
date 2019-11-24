@@ -1,0 +1,174 @@
+# -*- coding:utf-8 -*-  
+__author__ = 'Mr.Lin'
+__date__ = '2019/11/24 15:40'
+
+
+
+from numpy import  *
+" 线性回归 "
+
+
+# 处理数据集
+def loadDataSet(fileName):
+    numFeat = len(open(fileName).readline().split('\t')) - 1
+    dataMat = []
+    labelMat = []
+    fr = open(fileName)
+    for line in fr.readlines():
+        lineArr = []
+        curLine = line.strip().split('\t')
+        for i in range(numFeat):
+            lineArr.append(float(curLine[i]))
+        dataMat.append(lineArr)
+        labelMat.append(float(curLine[-1]))
+    return dataMat,labelMat
+
+
+def loadDataSet_detials(fileName):
+
+    numFeat = len(open(fileName).readline().split('\t')) - 1
+    print(numFeat)
+    print("")
+    print("")
+
+    dataMat = []
+    labelMat = []
+
+
+    fr = open(fileName)
+    for line in fr.readlines():
+        lineArr = []
+        curLine = line.strip().split('\t')
+        for i in range(numFeat):
+            # print(curLine[i])
+            lineArr.append(float(curLine[i]))
+        # print("=++++++++++++++++++++++")
+        # 存放的是 1.0 以及 x 的值
+        print(lineArr)
+        print("")
+        # print("===============================")
+        dataMat.append(lineArr)
+        print("curline",curLine[-1])
+        # curline[-1] 存放  y的值
+        labelMat.append(float(curLine[-1]))
+    # 最终返回  dataMat：存放 系数和 x的值
+    # labelMat： 存放 y的值
+
+    return dataMat,labelMat
+
+
+def standRegres(xArr,yArr):
+    xMat = mat(xArr)
+    yMat = mat(yArr).T
+    xTx = xMat.T*xMat
+    if linalg.det(xTx) == 0.0 :
+        print(" 没有逆矩阵 ")
+        return
+    ws = xTx.I * (xMat.T*yMat)
+    return ws
+
+def standRegres_details(xArr,yArr):
+
+    xMat = mat(xArr)
+    print(xMat)
+    print("")
+    print("")
+
+
+    yMat = mat(yArr).T
+    print(yMat)
+    print("")
+    print("")
+
+    xTx = xMat.T * xMat
+
+    # 行列式为 0 的话 就没有可逆矩阵
+    if linalg.det(xTx) == 0.0:
+        print(" 没有逆矩阵 ")
+        return
+    ws = xTx.I * (xMat.T * yMat)
+    return ws
+
+
+xArr,yArr = loadDataSet_detials('ex0.txt')
+standRegres_details(xArr,yArr)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
