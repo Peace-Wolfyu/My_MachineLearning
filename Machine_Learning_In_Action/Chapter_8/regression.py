@@ -90,8 +90,43 @@ def standRegres_details(xArr,yArr):
     return ws
 
 
-xArr,yArr = loadDataSet_detials('ex0.txt')
-standRegres_details(xArr,yArr)
+
+def lwlr(testPoint,xArr,yArr,k=1.0):
+    xMat = mat(xArr); yMat = mat(yArr).T
+    m = shape(xMat)[0]
+    weights = mat(eye((m)))
+    for j in range(m):                      #next 2 lines create weights matrix
+        diffMat = testPoint - xMat[j,:]     #
+        weights[j,j] = exp(diffMat*diffMat.T/(-2.0*k**2))
+    xTx = xMat.T * (weights * xMat)
+    if linalg.det(xTx) == 0.0:
+        print(" 没有逆矩阵 ")
+        return
+    ws = xTx.I * (xMat.T * (weights * yMat))
+    return testPoint * ws
+
+
+def lwlrTest(testArr,xArr,yArr,k=1.0):
+    m = shape(testArr)[0]
+    yHat = zeros(m)
+    for i in range(m):
+        yHat[i] = lwlr(testArr[i], xArr, yArr, k)
+    return yHat
+
+
+# 计算误差大小
+def rssError(yArr,yHatArr):
+    return ((yArr-yHatArr)**2).sum()
+
+xArr,yArr = loadDataSet('ex0.txt')
+# standRegres_details(xArr,yArr)
+
+print(lwlr(xArr[0],xArr,yArr,1.0))
+# >>>
+# [[3.12204471]]
+
+
+
 
 
 
