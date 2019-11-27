@@ -66,7 +66,7 @@ def plotBestFit(weights):
     plt.show()
 
 
-
+plotBestFit(2)
 
 
 
