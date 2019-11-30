@@ -57,7 +57,7 @@ ax.scatter(datingDataMat[:,1], datingDataMat[:,2], 15.0*array(datingLabels), 15.
 ax.axis([-2,25,-0.2,2.0])
 plt.xlabel("玩视频游戏所耗时间百分比")
 plt.ylabel('每周消费的冰淇淋公升数')
-# plt.show()
+plt.show()
 # plt.show()
 
 
