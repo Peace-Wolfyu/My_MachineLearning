@@ -129,16 +129,18 @@ class KNN:
         print("")
         print("knn_list :  \n",knn_list)
 
-        print("")
-        print("")
-        print("")
+        # print("")
+        # print("")
+        # print("")
 
 
-
+        # print("knn_list[0] :  \n",knn_list[0])
+        print("knn_list[0][0] :  \n", knn_list[0][0])
+        print("")
         for i in range(self.n, len(self.X_train)):
-            print("max value : \n",max(knn_list, key=lambda x: x[0]))
+            # print("max value : \n",max(knn_list, key=lambda x: x[0]))
             max_index = knn_list.index(max(knn_list, key=lambda x: x[0]))
-            print("max index : \n",max_index)
+            # print("max index : \n",max_index)
             dist = np.linalg.norm(X - self.X_train[i], ord=self.p)
             if knn_list[max_index][0] > dist:
                 knn_list[max_index] = (dist, self.y_train[i])
@@ -150,6 +152,8 @@ class KNN:
         # 统计
         knn = [k[-1] for k in knn_list]
         print("knn : \n",knn)
+
+        #  Counter类的目的是用来跟踪值出现的次数。它是一个无序的容器类型，以字典的键值对形式存储，其中元素作为key
         count_pairs = Counter(knn)
         print("count_pairs  : \n",count_pairs)
 
@@ -158,6 +162,8 @@ class KNN:
 
 
         max_count = sorted(count_pairs, key=lambda x: x)[-1]
+        new_max = sorted(count_pairs, key=lambda x: x)
+        print("new_max : \n",new_max)
         print("max_count : \n",max_count)
         return max_count
 
