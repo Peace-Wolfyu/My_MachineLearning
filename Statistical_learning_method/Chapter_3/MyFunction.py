@@ -91,6 +91,11 @@ class KNN_Model():
 
         for X, y in zip(X_test, y_test):
             label = self.prediction(X) # 调用预测模型 得出分类标签
+
+            print("预测类别为：{}".format(label))
+            print("实际类别为： {}".format(y))
+            print("")
+
             if label == y: # 如果分类正确
                 right_count += 1  #次数 +1
 

@@ -17,24 +17,146 @@ from sklearn.model_selection import train_test_split
 
 
 # data
-iris = load_iris()
+# Iris也称鸢尾花卉数据集，是一类多重变量分析的数据集。数据集包含150个数据样本，分为3类，
+# 每类50个数据，每个数据包含4个属性。可通过花萼长度，花萼宽度，花瓣长度，花瓣宽度4个属性
+# 预测鸢尾花卉属于（Setosa，Versicolour，Virginica）三个种类中的哪一类。
+# spal 花萼
+# petal 花瓣
+
+
+
+iris = load_iris() # 返回的是Bunch对象 与字典非常类似 包含键和值
+
+# print(" Keys of dataSet : \n{}".format(iris.keys()))
+
+#  Keys of dataSet :
+# dict_keys(['data', 'target', 'target_names', 'DESCR', 'feature_names', 'filename'])
+
+'''
+DESCR键对应的值是数据集的简要说明
+'''
+# print(iris['DESCR'][:193] + "\n.......")
+# .. _iris_dataset:
+#
+# Iris plants dataset
+# --------------------
+#
+# **Data Set Characteristics:**
+#
+#     :Number of Instances: 150 (50 in each of three classes)
+#     :Number of Attributes: 4 numeric, pre
+# .......
+
+
+'''
+target_names 对应要预测的花的品种
+'''
+# print("target_names : \n{}".format(iris['target_names']))
+# target_names :
+# ['setosa' 'versicolor' 'virginica']
+
+
+'''
+feature_names 对应一个字符串列表  对每一个特征进行了说明
+'''
+# print("feature_names : \n {}".format(iris['feature_names']))
+# feature_names :
+#  ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']
+
+
+'''
+数据放在 target 和 data 字段
+data里面是花萼长度  花萼宽度  花瓣长度  花瓣宽度
+格式为Numpy数组
+'''
+
+# print("Type of data : {}".format(type(iris['data'])))
+# Type of data : <class 'numpy.ndarray'>
+
+
+'''
+data数组每一行对应一朵花
+列代表每朵花的四个测量数据
+'''
+# print(" Shape of data : {}".format(iris['data'].shape))
+'''
+数组含有150朵不同的花的测量数据 
+'''
+# Shape of data: (150, 4)
+
+
+'''
+看看前五朵花的数据
+'''
+
+# print("First five rows of data: \n{}".format(iris['data'][:5]))
+# First five rows of data:
+# [[5.1 3.5 1.4 0.2]
+#  [4.9 3.  1.4 0.2]
+#  [4.7 3.2 1.3 0.2]
+#  [4.6 3.1 1.5 0.2]
+#  [5.  3.6 1.4 0.2]]
+
+
+'''
+target 数组是包含每朵花的品种  也是 Numpy数组
+'''
+
+# print("Type of target:\n{}".format(type(iris['target'])))
+# Type of target:
+# <class 'numpy.ndarray'>
+
+
+'''
+用 0 1 2分别代表不同的品种
+'''
+# print("Target : \n{}".format(iris['target']))
+# Target :
+# [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+#  0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+#  1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
+#  2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+#  2 2]
+
+
+
+
+
 df = pd.DataFrame(iris.data, columns=iris.feature_names)
+# print(df)
 df['label'] = iris.target
 df.columns = ['sepal length', 'sepal width', 'petal length', 'petal width', 'label']
+# print(df)
+#
+#      sepal length  sepal width  petal length  petal width  label
+# 0             5.1          3.5           1.4          0.2      0
+# 1             4.9          3.0           1.4          0.2      0
+# 2             4.7          3.2           1.3          0.2      0
+# 3             4.6          3.1           1.5          0.2      0
 # data = np.array(df.iloc[:100, [0, 1, -1]])
 
 
-plt.scatter(df[:50]['sepal length'], df[:50]['sepal width'], label='0')
-plt.scatter(df[50:100]['sepal length'], df[50:100]['sepal width'], label='1')
+plt.scatter(df[0:10]['sepal length'], df[:10]['sepal width'], label='0')
+plt.scatter(df[70:80]['sepal length'], df[70:80]['sepal width'], label='1')
 plt.xlabel('sepal length')
 plt.ylabel('sepal width')
 plt.legend()
-# plt.show()
+plt.show()
+
+# iloc是根据标签所在的位置，从0开始计数
+data1 = np.array(df.iloc[0:10, [0, 1, -1]])
+# print(data1)
+print("")
+print("")
+
+data2 = np.array(df.iloc[70:80, [0, 1, -1]])
+# print(data2)
+
+data = np.append(data1,data2,axis=0)
+
+# print(data)
 
 
-data = np.array(df.iloc[:100, [0, 1, -1]])
-
-print(data)
 
 # [[5.1 3.5 0. ]
 #  [4.9 3.  0. ]
@@ -146,7 +268,7 @@ print("")
 print("")
 X, y = data[:,:-1], data[:,-1]
 
-print("X : \n",X)
+# print("X : \n",X)
 print("")
 print("")
 
@@ -253,7 +375,7 @@ print("")
 #  [5.7 2.8]]
 
 
-print("y : \n",y)
+# print("y : \n",y)
 print("")
 print("")
 
@@ -268,7 +390,7 @@ print("")
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 
-print(" X_train : \n",X_train)
+# print(" X_train : \n",X_train)
 # X_train:
 # [[5.5 2.3]
 #  [5.2 3.5]

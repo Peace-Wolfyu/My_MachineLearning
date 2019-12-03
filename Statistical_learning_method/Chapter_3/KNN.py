@@ -170,12 +170,15 @@ class KNN:
     def score(self, X_test, y_test):
         right_count = 0
         n = 10
-        for X, y in zip(X_test, y_test):
-            print("X , y in zip  : \n",X,y)
-            print("**************************************'")
-            print("")
+        # for X, y in zip(X_test, y_test):
+            # print("X , y in zip  : \n",X,y)
+            # print("**************************************'")
+            # print("")
         for X, y in zip(X_test, y_test):
             label = self.predict(X) # 调用预测模型
+            print("预测类别为：{}".format(label))
+            print("实际类别为： {}".format(y))
+            print("")
             if label == y:
                 right_count += 1
         return right_count / len(X_test)
