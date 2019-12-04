@@ -7,12 +7,12 @@ from sklearn.datasets import load_iris
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.model_selection import train_test_split
+# from sklearn.model_selection import train_test_split
 """
 缩短数据集 方便观察
 """
 
-iris = load_iris() # 返回的是Bunch对象 与字典非常类似 包含键和值
+iris = load_iris()# 返回的是Bunch对象 与字典非常类似 包含键和值
 df = pd.DataFrame(iris.data, columns=iris.feature_names)
 df['label'] = iris.target
 df.columns = ['sepal length', 'sepal width', 'petal length', 'petal width', 'label']
