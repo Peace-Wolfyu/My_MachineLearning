@@ -229,8 +229,8 @@ class NaiveBayes:
 
 
         summaries = [(self.mean(i), self.stdev(i)) for i in zip(*train_data)]
-        # print("summaries : \n{}".format(summaries))
-        # print("")
+        print("summaries : \n{}".format(summaries))
+        print("")
         return summaries
 
 
@@ -314,19 +314,19 @@ class NaiveBayes:
             for i in range(len(value)):
                 mean, stdev = value[i]
                 probabilities[label] *= self.gaussian_probability(input_data[i], mean, stdev)
-                print("")
-                print("probabilities[label] : \n{}".format(probabilities[label]))
-                print("")
-        print("")
-        print("probabilities: \n{}".format(probabilities))
-        print("")
+                # print("")
+                # print("probabilities[label] : \n{}".format(probabilities[label]))
+                # print("")
+        # print("")
+        # print("probabilities: \n{}".format(probabilities))
+        # print("")
         return probabilities
 
 
     # 类别
     def predict(self, X_test):
         # {0.0: 2.9680340789325763e-27, 1.0: 3.5749783019849535e-26}
-        print("sorted(self.calculate_probabilities(X_test).items(), key=lambda x: x[-1]):\n{}".format(sorted(self.calculate_probabilities(X_test).items(), key=lambda x: x[-1])))
+        # print("sorted(self.calculate_probabilities(X_test).items(), key=lambda x: x[-1]):\n{}".format(sorted(self.calculate_probabilities(X_test).items(), key=lambda x: x[-1])))
         label = sorted(self.calculate_probabilities(X_test).items(), key=lambda x: x[-1])[-1][0]
         return label
 
@@ -346,13 +346,25 @@ model = NaiveBayes()
 
 model.fit(X_train, y_train)
 
-print(model.predict([4.4,  3.2,  1.3,  0.2]))
+print("model.predict([4.4,  3.2,  1.3,  0.2]):\n{}".format(model.predict([4.4,  3.2,  1.3,  0.2])))
 
 print("Score : \n{}".format(model.score(X_test, y_test)))
 
 
+def Cal_prior_probability(y):
+    # 计算每个类别所出现的次数
+    cnt = Counter(y)
+    for i in range(len(cnt)):
+        print(cnt[i])
+    label = {i:{}for i in cnt.keys()}
+    print(label)
+    for key in cnt.keys():
+        label[key] = cnt[key] / len(y)
+    print(label)
+    return np.array([cnt[i] / len(y) for i in range(len(cnt))])
 
-
+print("")
+print(Cal_prior_probability(y_train))
 
 
 
