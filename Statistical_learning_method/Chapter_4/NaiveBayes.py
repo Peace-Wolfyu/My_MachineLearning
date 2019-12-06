@@ -354,6 +354,7 @@ print("Score : \n{}".format(model.score(X_test, y_test)))
 def Cal_prior_probability(y):
     # 计算每个类别所出现的次数
     cnt = Counter(y)
+    print(cnt)
     for i in range(len(cnt)):
         print(cnt[i])
     label = {i:{}for i in cnt.keys()}
