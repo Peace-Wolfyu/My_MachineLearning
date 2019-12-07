@@ -24,12 +24,15 @@ class NaiveBayes:
         yTrain = xTrain.iloc[:,-1]
 
         yTrainCounts = yTrain.value_counts()# 频次汇总 得到各个特征对应的概率
-
+        print("yTrainCounts\n",yTrainCounts)
+        print("")
         yTrainCounts = yTrainCounts.apply(lambda x : (x + 1) / (yTrain.size + yTrainCounts.size)) #使用了拉普拉斯平滑
         retModel = {}
         for nameClass, val in yTrainCounts.items():
             retModel[nameClass] = {'PClass': val, 'PFeature':{}}
-
+        print("retModel",retModel)
+        print("")
+        print("")
         propNamesAll = xTrain.columns[:-1]
         allPropByFeature = {}
         for nameFeature in propNamesAll:

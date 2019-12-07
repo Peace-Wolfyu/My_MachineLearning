@@ -22,8 +22,13 @@ print("")
 
 m,n=np.shape(X)
 for i in range(m):
+
     X[i, n - 1] = round(X[i, n - 1], 3)
     X[i, n - 2] = round(X[i, n - 2], 3)
+
+print("After X:\n{}".format(X))
+print("")
+print("")
 y=dataset.values[:,-1]
 print("y:\n{}".format(y))
 print("")
@@ -65,9 +70,15 @@ print("goodList:\n{}".format(goodList))
 print("")
 print("")
 
+print("badList:\n{}".format(badList))
+print("")
+print("")
+
 
 
 import math
+
+
 def P(colID,attribute,C):#P(colName=attribute|C) P(色泽=青绿|是)
     if (colID,attribute,C) in Pmap:
         return Pmap[(colID,attribute,C)]
@@ -85,25 +96,34 @@ def P(colID,attribute,C):#P(colName=attribute|C) P(色泽=青绿|是)
         mean=1
         std=1
         if (colID,C) in continuousPara:
+            print("continuousPara:\n{}".format(continuousPara))
+            print("")
             curPara=continuousPara[(colID,C)]
             mean=curPara[0]
             std=curPara[1]
         else:
             curData=X[curJudgeList,colID]
+            print("curData:\n{}".format(curData))
+            print("***************")
             mean=curData.mean()
             std=curData.std()
             # print(mean,std)
             continuousPara[(colID, C)]=(mean,std)
-        ans=1/(math.sqrt(math.pi*2)*std)*math.exp((-(attribute-mean)**2)/(2*std*std))
+        ans=1/(math.sqrt(math.pi*2)*std)*math.exp((-(attribute-mean)**2)/(2*std*std))# 高斯分布
     else:
         for i in curJudgeList:
-            if X[i,colID]==attribute:ans+=1
-        ans=(ans+1)/(len(curJudgeList)+kindsOfAttribute[colID])
+            if X[i,colID] == attribute:
+                ans+=1
+        ans = (ans+1)/(len(curJudgeList)+kindsOfAttribute[colID])
     Pmap[(colID, attribute, C)] = ans
-    # print(ans)
+    print("ans:\n{}".format(ans))
+    print("")
     return ans
 
 def predictOne(single):
+    print("single",single)
+    print("")
+
     ansYes=math.log2((len(goodList)+1)/(len(y)+2))
     ansNo=math.log2((len(badList)+1)/(len(y)+2))
     for i in range(len(single)):
@@ -126,6 +146,9 @@ print(y)
 print(np.array(predictAll(X)))
 
 confusionMatrix=np.zeros((2,2))
+print("confusionMatrix:\n{}".format(confusionMatrix))
+
+
 for i in range(len(y)):
     if predictY[i]==y[i]:
         if y[i] == '否':

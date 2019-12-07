@@ -34,3 +34,8 @@ for i in zip(*data):
 # (2, 5, 8)
 #  i :
 # (3, 6, 9)
+
+
+def fun(x,y):
+    return x+y
+print(fun(1))
