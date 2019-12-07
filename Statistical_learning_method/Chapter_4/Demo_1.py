@@ -21,7 +21,23 @@ good_melon_List = []
 
 bad_melon_List = []
 
+'''
+计算均值
+'''
 
+
+def Cal_average(X):
+    return sum(X) / float(len(X))
+
+
+'''
+    计算标准差
+    '''
+def Cal_variance(X):
+
+        avg = Cal_average(X)
+
+        return math.sqrt(sum([pow(x-avg,2) for x in X])) / float(len(X))
 # 获取数据集
 def create_data():
 
@@ -35,8 +51,7 @@ def create_data():
     # 获取数据的行数和列数
     m, n = np.shape(X)
 
-    good_melon_num = 0
-    bad_melon_num = 0
+
     # 对数据进行规范，保留三位小数
     for i in range(m):
         X[i, n - 1] = round(X[i, n - 1], 3)
@@ -60,9 +75,17 @@ def Cal_probability(X,attribute,col_id,melon_class,cur_List,the_input_data):
 
     the_probability = 0
     if col_id >= 6:
-        cur_data = X[:,col_id]
+        # print("")
+        cur_data = X[cur_List,col_id]
+        # print("cur_data:\n{}".format(cur_data,melon_class))
+        # print("1:   ",Cal_average(cur_data))
+        # print("2:   ",Cal_variance(cur_data))
+        # print("")
         mean = cur_data.mean()
+        # print("mean : \n{}{}{}".format(mean,melon_class,attribute))
         std  = cur_data.std()
+        # print("std : \n{}{}{}".format(std,melon_class,attribute))
+        # print("")
         # print("the_input_data:\n{}".format(the_input_data))
         # print(type(the_input_data))
         the_input_data = float(the_input_data)
@@ -72,7 +95,7 @@ def Cal_probability(X,attribute,col_id,melon_class,cur_List,the_input_data):
         for i in cur_List:
             if(X[i,col_id]) == attribute:
                 the_probability += 1
-        print("the_probability / len(cur_List)",the_probability,len(cur_List),melon_class)
+        # print("the_probability / len(cur_List)",the_probability,len(cur_List),melon_class)
         the_probability = the_probability / len(cur_List)
 
     return the_probability
@@ -91,17 +114,17 @@ def fit(X_train,y_train,attribute,ColID,X_test):
     cur_List = []
 
     for label in labels:
-        print(attribute)
+        # print(attribute)
         if label == '是':
             cur_List = good_melon_List
             prob = Cal_probability(X=X_train,attribute=attribute,col_id=ColID,melon_class=label,cur_List=cur_List,the_input_data=X_test[ColID])
-            data[label].append(prob)
+            data[label].append(round(prob,3))
         if label == '否':
             cur_List = bad_melon_List
             prob = Cal_probability(X=X_train,attribute=attribute,col_id=ColID,melon_class=label,cur_List=cur_List,the_input_data=X_test[ColID])
-            data[label].append(prob)
+            data[label].append(round(prob,3))
 
-    print("data : \n{}".format(data))
+    print(*data['是'])
 
 
 
@@ -114,8 +137,8 @@ def fit(X_train,y_train,attribute,ColID,X_test):
 
 
 X,y = create_data()
-print(good_melon_List)
-print(bad_melon_List)
+# print(good_melon_List)
+# print(bad_melon_List)
 
 # print(X[1,2])
 # print(X[:,6])
