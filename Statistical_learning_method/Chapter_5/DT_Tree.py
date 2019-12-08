@@ -195,8 +195,12 @@ class DTree:
         node_tree = Node(root=False, feature_name=max_feature_name, feature=max_feature)
 
         feature_list = train_data[max_feature_name].value_counts().index
+        print("feature_list  {}".format(feature_list))
+        print("")
+
         for f in feature_list:
             sub_train_df = train_data.loc[train_data[max_feature_name] == f].drop([max_feature_name], axis=1)
+
 
             # 6, 递归生成树
             sub_tree = self.train(sub_train_df)
@@ -214,4 +218,23 @@ class DTree:
 
 
 
+datasets, labels = create_data()
+data_df = pd.DataFrame(datasets, columns=labels)
+dt = DTree()
+tree = dt.fit(data_df)
 
+print(tree)
+
+# {'label:':
+# None,
+# 'feature':
+# 2,
+# 'tree':
+# {'否':
+# {'label:': None, 'feature': 1,
+# 'tree': {'否': {'label:': '否', 'feature': None,
+# 'tree': {}}, '是': {'label:': '是', 'feature': None,
+# 'tree': {}}}}, '是': {'label:': '是', 'feature': None, 'tree': {}}}}
+
+
+print(dt.predict(['老年', '否', '否', '一般']))
