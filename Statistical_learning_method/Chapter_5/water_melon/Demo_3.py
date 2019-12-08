@@ -31,17 +31,24 @@ class DecisionTree:
     attr_value_set = {}
 
     def __init__(self, data, labels):
+        print("初始化函数：")
         self.root = Node()
+        print("root             ",self.root)
         self.labels = labels
+        print("labels        ",labels)
         for label in self.labels:
             col_num = labels.index(label)
             col = [a[col_num] for a in data]
+            print("col     ",col)
             self.attr_value_set[label] = set(col)
+        print("初始化结束")
 
     # 计算类别的熵
     # param: 数据集（格式：[[绿色，硬皮，好]]）
     # 最后一列是分类
     def calculate_entropy(self, data):
+
+        print("DDDDD        ",data)
         # 数据量
         row_num, col_num = np.shape(data)
         # 各个类别的数量(类别名：数量)
@@ -71,7 +78,7 @@ class DecisionTree:
             if y_count[key] > max_count:
                 max_count = y_count[key]
                 max_key = key
-        # print("max_key ;",max_key)
+        print("max_key          ;",max_key)
         return max_key
 
     # 划分数据集，根据属性ai,获取值为ai_v的数据集data_v
@@ -84,7 +91,8 @@ class DecisionTree:
                 reduced_row = row[:i]
                 reduced_row.extend(row[i + 1:])
                 data_v.append(reduced_row)
-        # print("data_v   ;",data_v)
+        print("data_v                   ;",data_v)
+
         return data_v
 
     # 最优划分属性，根据熵，增益,返回属性列序号
@@ -93,8 +101,11 @@ class DecisionTree:
     def find_best_attr(self, data):
         # 属性的数量
         attr_num = len(data[0]) - 1
+
         # 计算D的熵
         ent_d = self.calculate_entropy(data)
+
+
         # 增益
         best_gain = 0
         # 最优属性序号(0~len(data)-1)
@@ -125,6 +136,7 @@ class DecisionTree:
             node = self.root
         # 获取分类列(data最后一列)
         class_y = [cls[-2] for cls in data]
+        print("class_y          ",class_y)
         # 分类相同，标记为叶子节点
         if class_y.count(class_y[0]) == len(class_y):
             node.class_y = class_y[0]
@@ -147,6 +159,7 @@ class DecisionTree:
         # attr_i = [a[best_attr] for a in data]
         # 最优属性ai所有取值
         attr_iv_set = self.attr_value_set[node.a_i]
+        print("attr_iv_set              ",attr_iv_set)
         for attr_iv in attr_iv_set:
             # 为node生成一个分支节点，data_v表示data在属性attr_i取值为attr_iv的样本集合
             child_node = Node()

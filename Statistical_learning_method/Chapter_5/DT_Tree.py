@@ -51,9 +51,12 @@ def create_data():
 
 
 
-datasets, labels = create_data()
 
-train_data = pd.DataFrame(datasets, columns=labels)
+# print(datasets)
+# print("")
+# print(labels)
+#
+# train_data = pd.DataFrame(datasets, columns=labels)
 
 # print(train_data)
 
@@ -97,7 +100,7 @@ def info_gain_train(datasets):
     best_ = max(best_feature, key=lambda x: x[-1])
     return '特征({})的信息增益最大，选择为根节点特征'.format(labels[best_[0]])
 
-print(info_gain_train(np.array(datasets)))
+# print(info_gain_train(np.array(datasets)))
 
 
 # 定义节点类 二叉树
@@ -108,10 +111,10 @@ class Node:
         self.feature_name = feature_name
         self.feature = feature
         self.tree = {}
-        self.result = {'label:': self.label, 'feature': self.feature, 'tree': self.tree}
+        self.result = {'label:': self.label, 'feature': self.feature, 'tree': self.tree,'feature_name':self.feature_name}
 
     def __repr__(self):
-        return '{}'.format(self.result)
+        return '++{}'.format(self.result)
 
     def add_node(self, val, node):
         self.tree[val] = node
@@ -174,22 +177,37 @@ class DTree:
         output:决策树T
         """
         _, y_train, features = train_data.iloc[:, :-1], train_data.iloc[:, -1], train_data.columns[:-1]
+
+
+        print("_                    ",_)
+        print("")
+        print("(y_train          ",y_train)
+
+        print("")
+
+        print("features,",features)
+        print("+++++")
         # 1,若D中实例属于同一类Ck，则T为单节点树，并将类Ck作为结点的类标记，返回T
         if len(y_train.value_counts()) == 1:
+            print("label=y_train.iloc[0]\n{}".format(y_train.iloc[0]))
             return Node(root=True,
                         label=y_train.iloc[0])
 
+
+
         # 2, 若A为空，则T为单节点树，将D中实例树最大的类Ck作为该节点的类标记，返回T
         if len(features) == 0:
+            print("label=y_train.value_counts().sort_values(ascending=False).index[0]\n{}".format(y_train.value_counts().sort_values(ascending=False).index[0]))
             return Node(root=True, label=y_train.value_counts().sort_values(ascending=False).index[0])
 
         # 3,计算最大信息增益 同5.1,Ag为信息增益最大的特征
         max_feature, max_info_gain = self.info_gain_train(np.array(train_data))
         max_feature_name = features[max_feature]
+        print("max_name    max_info_gain  {}{}".format(features[max_feature],max_info_gain))
 
         # 4,Ag的信息增益小于阈值eta,则置T为单节点树，并将D中是实例数最大的类Ck作为该节点的类标记，返回T
         if max_info_gain < self.epsilon:
-            return Node(root=True, label=y_train.value_counts().sort_values(ascending=False).index[0])
+            return Node(root=True, label=y_train.value_counts().sort_values(ascending=False).index[0],feature_name=max_feature_name)
 
         # 5,构建Ag子集
         node_tree = Node(root=False, feature_name=max_feature_name, feature=max_feature)
@@ -216,9 +234,32 @@ class DTree:
     def predict(self, X_test):
         return self._tree.predict(X_test)
 
+def create__data__melon():
+
+    # 读取 csv文件
+    dataset = pd.read_csv('watermelon_3.csv', delimiter=",")
+    del dataset['编号']
+    # print(*dataset.columns)
+    y = dataset.columns.tolist()
+
+    # 获取全部数据
+    X = dataset.values[:, :]
+
+    print("X：\n{}".format(X))
 
 
-datasets, labels = create_data()
+    return X.tolist(),y
+
+# datasets, labels = create_data()
+
+
+
+datasets, labels = create__data__melon()
+print(type(datasets))
+print(datasets)
+
+print(labels)
+
 data_df = pd.DataFrame(datasets, columns=labels)
 dt = DTree()
 tree = dt.fit(data_df)
@@ -237,4 +278,4 @@ print(tree)
 # 'tree': {}}}}, '是': {'label:': '是', 'feature': None, 'tree': {}}}}
 
 
-print(dt.predict(['老年', '否', '否', '一般']))
+# print(dt.predict(['老年', '否', '否', '一般']))

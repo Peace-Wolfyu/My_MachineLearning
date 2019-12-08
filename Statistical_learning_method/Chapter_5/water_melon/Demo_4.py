@@ -19,7 +19,7 @@ def calcShannonEnt(dataSet):  # 计算数据的信息熵(entropy)
             labelCounts[currentLabel] = 0 # 这一步其实就是在字典里面初始化每个类别的个数
         labelCounts[currentLabel] += 1  # 统计有多少个类以及每个类的数量
 
-    print("labelCounts:\n{}".format(labelCounts))
+    # print("labelCounts:\n{}".format(labelCounts))
     print("")
     shannonEnt = 0
     for key in labelCounts:
@@ -37,6 +37,8 @@ def createDataSet1():    # 创造示例数据
                ['长', '粗', '女'],
                ['长', '粗', '女']]
     features = ['头发','声音']  #两个特征
+
+    print(type(dataSet))
     return dataSet,features
 
 def create_data():
@@ -65,7 +67,7 @@ def create_data():
     #     kindsOfAttribute[i] = len(set(X[:, i]))
 
 
-    return X,y
+    return X.tolist(),y
 
 
 def splitDataSet(dataSet,axis,value): # 按某个特征分类后的数据
@@ -97,6 +99,7 @@ def chooseBestFeatureToSplit(dataSet):  # 选择最优的分类特征
         if (infoGain > bestInfoGain):   # 若按某特征划分后，熵值减少的最大，则次特征为最优分类特征
             bestInfoGain = infoGain
             bestFeature = i
+    print("bestInfoGain,bestFeature     ",bestInfoGain,bestFeature)
     return bestFeature # 返回的是最优特征的索引
 
 def majorityCnt(classList):    # 按分类后类别数量排序，比如：最后分类为2男1女，则判定为男；
@@ -118,6 +121,7 @@ def createTree(dataSet, labels):
         return majorityCnt(classList)
     bestFeat = chooseBestFeatureToSplit(dataSet) #选择最优特征的索引
     bestFeatLabel = labels[bestFeat]
+    print(bestFeatLabel)
     myTree = {bestFeatLabel:{}} # 分类结果以字典形式保存
     del(labels[bestFeat])  # labels中只有头发这个属性了
     featValues = [example[bestFeat] for example in dataSet]
@@ -131,8 +135,10 @@ def createTree(dataSet, labels):
 if __name__=='__main__':
     dataSet, labels = create_data()  # 创造示列数据
     print(createTree(dataSet, labels))  # 输出决策树模型结果
+    # createDataSet1()
     # X,y = create_data()
-    # print(X)
+    # # print(X.tolist())
+    # print(type(X))
     # print("")
     # print(y)
 
