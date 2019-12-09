@@ -197,7 +197,8 @@ class DTree:
 
         # 2, 若A为空，则T为单节点树，将D中实例树最大的类Ck作为该节点的类标记，返回T
         if len(features) == 0:
-            print("label=y_train.value_counts().sort_values(ascending=False).index[0]\n{}".format(y_train.value_counts().sort_values(ascending=False).index[0]))
+
+            print("len(features) == 0",features)
             return Node(root=True, label=y_train.value_counts().sort_values(ascending=False).index[0])
 
         # 3,计算最大信息增益 同5.1,Ag为信息增益最大的特征
@@ -279,3 +280,19 @@ print(tree)
 
 
 # print(dt.predict(['老年', '否', '否', '一般']))
+
+
+# ++{'label:': None, 'feature': 3,
+# 'tree': {'清晰': ++{'label:': None, 'feature': 1,
+# 'tree': {'蜷缩': ++{'label:': '是', 'feature': None,
+# 'tree': {}, 'feature_name': None}, '稍蜷': ++{'label:': None, 'feature': 0,
+# 'tree': {'乌黑': ++{'label:': None, 'feature': 2,
+# 'tree': {'软粘': ++{'label:': '否', 'feature': None,
+# 'tree': {}, 'feature_name': None}, '硬滑': ++{'label:': '是', 'feature': None,
+# 'tree': {}, 'feature_name': None}}, 'feature_name': '触感'}, '青绿': ++{'label:': '是', 'feature': None,
+# 'tree': {}, 'feature_name': None}}, 'feature_name': '色泽'}, '硬挺': ++{'label:': '否', 'feature': None,
+# 'tree': {}, 'feature_name': None}}, 'feature_name': '根蒂'}, '稍糊': ++{'label:': None, 'feature': 4,
+# 'tree': {'硬滑': ++{'label:': '否', 'feature': None,
+# 'tree': {}, 'feature_name': None}, '软粘': ++{'label:': '是', 'feature': None,
+# 'tree': {}, 'feature_name': None}}, 'feature_name': '触感'}, '模糊': ++{'label:': '否', 'feature': None,
+# 'tree': {}, 'feature_name': None}}, 'feature_name': '纹理'}
