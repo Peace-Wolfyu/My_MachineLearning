@@ -41,6 +41,7 @@ class DecisionTree:
             col = [a[col_num] for a in data]
             print("col     ",col)
             self.attr_value_set[label] = set(col)
+        # print("attr_value_set           ",self.attr_value_set)
         print("初始化结束")
 
     # 计算类别的熵
