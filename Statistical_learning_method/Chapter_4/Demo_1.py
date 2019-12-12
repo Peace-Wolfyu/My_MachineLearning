@@ -159,6 +159,8 @@ def prediction():
     for j in the_bad_melon_probability:
         bad = math.log(j) + bad
 
+    print(good)
+    print(bad)
     if good > bad:
         return '好'
     else:
