@@ -1,0 +1,10 @@
+有 3 种不同的 API 用于评估模型预测的质量:
+
+Estimator score method（估计器得分的方法）: Estimators（估计器）有一个 score（得分） 方法，为其解决的问题提供了默认的 evaluation criterion （评估标准）。 在这个页面上没有相关讨论，但是在每个 estimator （估计器）的文档中会有相关的讨论。
+Scoring parameter（评分参数）: Model-evaluation tools （模型评估工具）使用 cross-validation (如 model_selection.cross_val_score 和 model_selection.GridSearchCV) 依靠 internal scoring strategy （内部 scoring（得分） 策略）。这在 scoring 参数: 定义模型评估规则 部分讨论。
+Metric functions（指标函数）: metrics 模块实现了针对特定目的评估预测误差的函数。这些指标在以下部分部分详细介绍 分类指标, 多标签排名指标, 回归指标 和 聚类指标 。
+最后， 虚拟估计 用于获取随机预测的这些指标的基准值。
+
+See also:对于 “pairwise（成对）” metrics（指标），samples（样本） 之间而不是 estimators （估计量）或者 predictions（预测值），请参阅 成对的矩阵, 类别和核函数 部分。dr
+
+
