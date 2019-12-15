@@ -25,6 +25,21 @@ the_good_melon_probability = []
 # 全局变量 存放 基于坏瓜的后验概率
 the_bad_melon_probability = []
 
+# 全局变量 记录每列有多少个不同属性
+kindsOfAttribute={}
+
+
+
+
+# 计算先验概率
+
+def Cal_Prior_probability(y_train):
+    cnt = Counter(y_train)
+    prior = {}
+    for key in cnt.keys():
+        # 加入拉普拉斯平滑
+        prior[key] = round((cnt[key]+1) / (len(y_train)+2),3)
+    return prior
 
 # 获取数据集以及处理
 def create_data():
@@ -46,6 +61,9 @@ def create_data():
 
     # 获取最后一列数据 即 西瓜所属分类（好瓜 坏瓜）
     y = dataset.values[:, -1]
+
+    for i in range(n):
+        kindsOfAttribute[i] = len(set(X[:, i]))
 
     # 获取好瓜 坏瓜的位置
     for i in range(len(y)):
@@ -101,7 +119,7 @@ def Cal_probability(X,attribute,col_id,melon_class,cur_List,the_input_data):
             if(X[i,col_id]) == attribute:
                 the_probability += 1
 
-        the_probability = the_probability / len(cur_List)
+        the_probability = (the_probability+1) / (len(cur_List) + kindsOfAttribute[col_id])
 
     return the_probability
 
@@ -149,18 +167,19 @@ def fit(X_train,y_train,attribute,ColID,X_test):
 
 
 # 最终的预测
-def prediction():
+def prediction(y_train):
 
+    # 计算概率时为避免连乘操作，使用log操作把概率转换成相加的形式
     good = 0
     bad = 0
+    prior = Cal_Prior_probability(y_train=y)
     for i in the_good_melon_probability:
         good = math.log(i) + good
-
+    good = math.log(prior['是']) + good
     for j in the_bad_melon_probability:
         bad = math.log(j) + bad
+    bad = math.log(prior['否']) + bad
 
-    print(good)
-    print(bad)
     if good > bad:
         return '好'
     else:
@@ -175,7 +194,9 @@ the_test = np.array(
 for i in range(len(the_test)):
     fit(X_train=X,y_train=y,attribute=the_test[i],ColID=i,X_test=the_test)
 
-print(prediction())
+
+Cal_Prior_probability(y_train=y)
+print(prediction(y_train=y))
 
 
 
