@@ -8,15 +8,20 @@
 
 Parameter estimation using grid search with cross-validation
 
+基于交叉验证的网格搜索参数估计。
+
 '''
 
 
 '''
-This examples shows how a classifier is optimized by cross-validation, which is done using the sklearn.model_selection.GridSearchCV object on a development set that comprises only half of the available labeled data.
+This examples shows how a classifier is optimized by cross-validation, which is done using the sklearn.model_selection.GridSearchCV 
+object on a development set that comprises only half of the available labeled data.
 
-The performance of the selected hyper-parameters and trained model is then measured on a dedicated evaluation set that was not used during the model selection step.
+The performance of the selected hyper-parameters and trained model is then measured on a dedicated evaluation set that 
+was not used during the model selection step.
 
-More details on tools available for model selection can be found in the sections on Cross-validation: evaluating estimator performance and Tuning the hyper-parameters of an estimator.
+More details on tools available for model selection can be found in the sections on Cross-validation: evaluating estimator 
+performance and Tuning the hyper-parameters of an estimator.
 '''
 
 
