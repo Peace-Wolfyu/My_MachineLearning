@@ -20,7 +20,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import LinearSVC
 import matplotlib.pyplot as plt
-
 from Chapter_5.demo.plot_decision_boundary import plot_svc_decision_boundary
 
 iris = datasets.load_iris()
